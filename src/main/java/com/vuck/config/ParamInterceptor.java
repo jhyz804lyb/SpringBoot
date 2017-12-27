@@ -1,5 +1,6 @@
 package com.vuck.config;
 
+import com.vuck.common.Cost;
 import com.vuck.h_dao.HqlBaseDao;
 import com.vuck.utils.ConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ public class ParamInterceptor implements HandlerInterceptor
         if (!(o instanceof HandlerMethod)) return true;
         //得到当前请求的方法
         HandlerMethod method = (HandlerMethod) o;
-        ConfigUtils.invokeMethod(method, httpServletRequest);
+        Object result = ConfigUtils.invokeMethod(method, httpServletRequest);
+        httpServletRequest.setAttribute(Cost.FRAME_PARAM, result);
         return true;
     }
 

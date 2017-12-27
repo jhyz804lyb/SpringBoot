@@ -1,8 +1,12 @@
 package com.vuck.utils;
+import com.vuck.annotations.FindKey;
+
 import javax.persistence.Entity;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.Map;
+
+import static com.vuck.utils.Util.getParment;
 
 public class ReflectionUtil
 {
@@ -656,4 +660,32 @@ public class ReflectionUtil
         return false;
     }
 
+    /**
+     * @param type
+     * @return
+     */
+    public static Field[] getFieldArray(Class type, Class an) {
+        int count = 0;
+        Field[] temp = new Field[getAnnotationCount(type, an)];
+        Field[] parment = getParment(type);
+        for (Field field : parment) {
+            Annotation annotation = getFieldAnnotation(field, an);
+            if (annotation != null) temp[count++] = field;
+        }
+        return temp;
+    }
+
+    /**
+     * @param type
+     * @return
+     */
+    public static int getAnnotationCount(Class type, Class an) {
+        int count = 0;
+        Field[] parment = getParment(type);
+        for (Field field : parment) {
+            Annotation annotation = getFieldAnnotation(field, an);
+            if (annotation != null) count++;
+        }
+        return count;
+    }
 }

@@ -6,10 +6,9 @@ package com.vuck.common;
  * @author liyabin
  * @date 2017-08-30下午 8:26
  */
-public class PageInfo
-{
-    public PageInfo()
-    {
+public class PageInfo {
+    public PageInfo() {
+        this.pageNo = 1;
     }
 
     /**
@@ -37,53 +36,43 @@ public class PageInfo
      */
     private String parameterUrl;
 
-    public Integer getPageNo()
-    {
+    public Integer getPageNo() {
         return pageNo;
     }
 
-    public void setPageNo(Integer pageNo)
-    {
+    public void setPageNo(Integer pageNo) {
         this.pageNo = pageNo;
     }
 
-    public Integer getMaxPage()
-    {
+    public Integer getMaxPage() {
         return maxPage;
     }
 
-    public void setMaxPage(Integer maxPage)
-    {
+    public void setMaxPage(Integer maxPage) {
         this.maxPage = maxPage;
     }
 
-    public Integer getPageCount()
-    {
+    public Integer getPageCount() {
         return pageCount;
     }
 
-    public void setPageCount(Integer pageCount)
-    {
+    public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
     }
 
-    public String getUrl()
-    {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url)
-    {
+    public void setUrl(String url) {
         this.url = url;
     }
 
-    public String getParameterUrl()
-    {
+    public String getParameterUrl() {
         return parameterUrl;
     }
 
-    public void setParameterUrl(String parameterUrl)
-    {
+    public void setParameterUrl(String parameterUrl) {
         this.parameterUrl = parameterUrl;
     }
 

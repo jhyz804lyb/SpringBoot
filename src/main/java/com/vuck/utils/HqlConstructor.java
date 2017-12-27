@@ -66,6 +66,11 @@ public class HqlConstructor
         return HQL.toString();
     }
 
+    public static String createCountHQL(String hql) throws Exception
+    {
+        return "select count(1) "+hql;
+    }
+
     /**
      * 构建HQL语句，推荐使用有排序的Map LinkedHashMap
      *
