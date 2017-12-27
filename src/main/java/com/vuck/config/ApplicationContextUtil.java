@@ -1,14 +1,8 @@
-package com.vuck.utils;
-
+package com.vuck.config;
 import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.*;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.*;
 @Component
 public class ApplicationContextUtil implements ApplicationContextAware
 {
@@ -35,11 +29,8 @@ public class ApplicationContextUtil implements ApplicationContextAware
     public static <T> List<T> getBeanByType(Class<T> clazz)
     {
         List<T> list = new ArrayList<T>();
-        
         /* 获取接口的所有实例名 */
         String[] beanNames = applicationContext.getBeanNamesForType(clazz);
-        System.out.println("getBeanByType beanNames : " + beanNames == null ? "" : Arrays.toString(beanNames));
-
         if (beanNames == null || beanNames.length == 0)
         {
             return list;

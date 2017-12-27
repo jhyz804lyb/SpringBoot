@@ -1,4 +1,5 @@
 package com.vuck.utils;
+
 import com.vuck.annotations.*;
 import com.vuck.exception.DataNoMatchException;
 
@@ -14,29 +15,31 @@ import java.util.*;
  */
 public class HqlConstructor
 {
-    public HqlConstructor()
-    {
-    }
 
     /**
      * 构建HQL语句，推荐使用有排序的Map LinkedHashMap
      *
      * @param beanType
      * @param values
+     * @param isSerachKey
      * @return
      */
-    public static String createCountHQL(Class beanType, Map<String, String> values) throws Exception
+    public static String createCountHQL(String entityName, Class beanType, Map<String, String> values,
+                                        Boolean isSerachKey) throws Exception
     {
         if (beanType == null || values == null) return null;
         StringBuilder HQL = new StringBuilder();
         Iterator<String> iterator = values.keySet().iterator();
         Entity entity = (Entity) ReflectionUtil.getAnnotation(beanType, Entity.class);
-        HQL.append("select count(1) from ").append(entity == null ? beanType.getSimpleName() : entity.name());
+        HQL.append("select count(1) from ").append(!StringUtils.isEmpty(entityName) ? entityName :
+                        (entity == null ? beanType.getSimpleName() : entity.name()));
         boolean first = true;
         while (iterator.hasNext())
         {
             String key = iterator.next();
             Field actualField = ReflectionUtil.getActualField(key, beanType);
+            if (isSerachKey != null && isSerachKey && !ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class))
+                continue;
             if (actualField == null) continue;//如果这个查询条件没有找到字段那么跳过。
             if (ReflectionUtil.hasFieldAnnotation(actualField, NotSerachField.class))
                 continue; //如果这个字段不需要作为查询条件的话那么也跳过。
@@ -48,7 +51,8 @@ public class HqlConstructor
             FindKey findKey = (FindKey) ReflectionUtil.getFieldAnnotation(actualField, FindKey.class);
             if (between != null)
             {
-                HQL.append(key).append(">=").append(":").append(key).append("_").append(between.startField()).append(" and ");
+                HQL.append(key).append(">=").append(":").append(key).append("_").append(between.startField())
+                        .append(" and ");
                 HQL.append(key).append("<=").append(":").append(key).append("_").append(between.endField());
             }
             else
@@ -67,21 +71,27 @@ public class HqlConstructor
      *
      * @param beanType
      * @param values
+     * @param isSerachKey
      * @return
      */
-    public static String createHQLByBean(Class beanType, Map<String, String> values) throws Exception
+    public static String createHQLByBean(String entityName, Class beanType, Map<String, String> values,
+                                         Boolean isSerachKey) throws Exception
     {
         if (beanType == null || values == null) return null;
         StringBuilder HQL = new StringBuilder();
         Iterator<String> iterator = values.keySet().iterator();
         Entity entity = (Entity) ReflectionUtil.getAnnotation(beanType, Entity.class);
-        HQL.append("select * from ").append(entity == null ? beanType.getSimpleName() : entity.name());
+        HQL.append(" from ").append(!StringUtils.isEmpty(entityName) ? entityName :
+                        (entity == null ? beanType.getSimpleName() : entity.name()));
         boolean first = true;
         while (iterator.hasNext())
         {
             String key = iterator.next();
             Field actualField = ReflectionUtil.getActualField(key, beanType);
+
             if (actualField == null) continue;//如果这个查询条件没有找到字段那么跳过。
+            if (isSerachKey != null && isSerachKey && !ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class))
+                continue;
             if (ReflectionUtil.hasFieldAnnotation(actualField, NotSerachField.class))
                 continue; //如果这个字段不需要作为查询条件的话那么也跳过。
             if (first)
@@ -92,7 +102,8 @@ public class HqlConstructor
             FindKey findKey = (FindKey) ReflectionUtil.getFieldAnnotation(actualField, FindKey.class);
             if (between != null)
             {
-                HQL.append(key).append(">=").append(":").append(key).append("_").append(between.startField()).append(" and ");
+                HQL.append(key).append(">=").append(":").append(key).append("_").append(between.startField())
+                        .append(" and ");
                 HQL.append(key).append("<=").append(":").append(key).append("_").append(between.endField());
             }
             else
@@ -105,24 +116,30 @@ public class HqlConstructor
         HQL.append(getOrderByStr("", beanType));
         return HQL.toString();
     }
+
     /**
      * 构建HQL语句
      *
      * @param beanType
      * @param values
+     * @param isSerachKey
      * @return
      */
-    public static String createCountHQLByBean(Class beanType, List<String> values) throws Exception
+    public static String createCountHQLByBean(String entityName, Class beanType, List<String> values,
+                                              Boolean isSerachKey) throws Exception
     {
         if (beanType == null || values == null) return null;
         StringBuilder HQL = new StringBuilder();
         Entity entity = (Entity) ReflectionUtil.getAnnotation(beanType, Entity.class);
-        HQL.append("select count(1) from ").append(entity == null ? beanType.getSimpleName() : entity.name());
+        HQL.append("select count(1) from ").append(!StringUtils.isEmpty(entityName) ? entityName :
+                (entity == null ? beanType.getSimpleName() : entity.name()));
         boolean first = true;
         for (String key : values)
         {
             Field actualField = ReflectionUtil.getActualField(key, beanType);
             if (actualField == null) continue;//如果这个查询条件没有找到字段那么跳过。
+            if (isSerachKey != null && isSerachKey && !ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class))
+                continue;
             if (ReflectionUtil.hasFieldAnnotation(actualField, NotSerachField.class))
                 continue; //如果这个字段不需要作为查询条件的话那么也跳过。
             if (first)
@@ -152,19 +169,24 @@ public class HqlConstructor
      *
      * @param beanType
      * @param values
+     * @param isSerachKey
      * @return
      */
-    public static String createHQLByBean(Class beanType, List<String> values) throws Exception
+    public static String createHQLByBean(String entityName, Class beanType, List<String> values, Boolean isSerachKey)
+            throws Exception
     {
         if (beanType == null || values == null) return null;
         StringBuilder HQL = new StringBuilder();
         Entity entity = (Entity) ReflectionUtil.getAnnotation(beanType, Entity.class);
-        HQL.append("select * from ").append(entity == null ? beanType.getSimpleName() : entity.name());
+        HQL.append("from ").append(!StringUtils.isEmpty(entityName) ? entityName :
+                (entity == null ? beanType.getSimpleName() : entity.name()));
         boolean first = true;
         for (String key : values)
         {
             Field actualField = ReflectionUtil.getActualField(key, beanType);
             if (actualField == null) continue;//如果这个查询条件没有找到字段那么跳过。
+            if (isSerachKey != null && isSerachKey && !ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class))
+                continue;
             if (ReflectionUtil.hasFieldAnnotation(actualField, NotSerachField.class))
                 continue; //如果这个字段不需要作为查询条件的话那么也跳过。
             if (first)
@@ -193,14 +215,16 @@ public class HqlConstructor
      * 构建HQL语句
      *
      * @param beanType
+     * @param isSerachKey
      * @return
      */
-    public static String createHQLByBean(Class beanType) throws Exception
+    public static String createHQLByBean(String entityName, Class beanType, Boolean isSerachKey) throws Exception
     {
         if (beanType == null) return null;
         StringBuilder HQL = new StringBuilder();
         Entity entity = (Entity) ReflectionUtil.getAnnotation(beanType, Entity.class);
-        HQL.append("select * from ").append(entity == null ? beanType.getSimpleName() : entity.name());
+        HQL.append("from ").append(StringUtils.isEmpty(entityName) ? entityName :
+                (entity == null ? beanType.getSimpleName() : entity.name()));
         boolean first = true;
         for (Field actualField : ReflectionUtil.getClassFiled(beanType))
         {
