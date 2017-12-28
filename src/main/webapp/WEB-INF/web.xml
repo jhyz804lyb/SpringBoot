@@ -13,11 +13,10 @@
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
     <!-- IOC配置 -->
-
     <jsp-config>
       <taglib>
           <taglib-uri>mytaglib</taglib-uri>
-           <taglib-location>/webapp/WEB-INF/base.tld</taglib-location>
+           <taglib-location>/WEB-INF/base.tld</taglib-location>
        </taglib>
     </jsp-config>
 

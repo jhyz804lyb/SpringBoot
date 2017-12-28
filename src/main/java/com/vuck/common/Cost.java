@@ -21,6 +21,6 @@ public class Cost {
 
     public static final String REQUEST_URL = "REQUEST_URL";
 
-    public static final String COMMON_PAGE = "/Manage/ListTest";
+    public static final String COMMON_PAGE = "base/base";
 
 }

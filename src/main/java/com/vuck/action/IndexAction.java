@@ -2,6 +2,7 @@ package com.vuck.action;
 
 import com.vuck.annotations.Find;
 import com.vuck.annotations.Page;
+import com.vuck.common.Cost;
 import com.vuck.entity.Match;
 import com.vuck.entity.MatchDao;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,6 @@ public class IndexAction
     @Page
     public String getListDao(@Find(entityClass =Match.class) List<MatchDao> result)
     {
-        return "manage/ListTest";
+        return Cost.COMMON_PAGE;
     }
 }
