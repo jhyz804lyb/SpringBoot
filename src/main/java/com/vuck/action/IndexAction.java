@@ -29,6 +29,6 @@ public class IndexAction
     @Page
     public String getListDao(@Find(entityClass =Match.class) List<MatchDao> result)
     {
-        return "index";
+        return "manage/ListTest";
     }
 }

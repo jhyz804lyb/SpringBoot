@@ -57,7 +57,7 @@ public class PageTag extends SimpleTagSupport {
         if (pageNo == 1 || pageNo == 0)
             html.append("<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>");
         else
-            html.append("<li><a href=\"" + createUrl(pageNo - 1, pageInfo.getUrl()) + "\" "+createFunction(pageNo - 1,pageInfo)+" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>");
+            html.append("<li><a href=\"" + createUrl(pageNo - 1, pageInfo.getParameterUrl()) + "\" "+createFunction(pageNo - 1,pageInfo)+" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>");
         int count = 1;
         for (int i = 1; i <= maxCount; i++) {
             if (i + 5 < pageNo) continue;
@@ -66,13 +66,13 @@ public class PageTag extends SimpleTagSupport {
             if (i == pageNo)
                 html.append("<li class=\"active\"><a class='disabled' href=\"#\">" + i + " <span class=\"sr-only\">(current)</span></a></li>");
             else {
-                html.append("<li><a  href=\"" + createUrl(i, pageInfo.getUrl()) + "\" "+createFunction(i,pageInfo)+" >" + i + " <span class=\"sr-only\">(current)</span></a></li>");
+                html.append("<li><a  href=\"" + createUrl(i, pageInfo.getParameterUrl()) + "\" "+createFunction(i,pageInfo)+" >" + i + " <span class=\"sr-only\">(current)</span></a></li>");
             }
         }
         if (pageNo == maxCount)
             html.append("<li class='disabled'><a href=\"#\" aria-label=\"Next\"><span aria-hidden=\"true\">»</span></a></li>");
         else
-            html.append("<li><a href=\"" + createUrl(pageNo + 1, pageInfo.getUrl()) + "\" " + createFunction(pageNo + 1,pageInfo) + " aria-label=\"Next\"><span aria-hidden=\"true\">»</span></a></li>");
+            html.append("<li><a href=\"" + createUrl(pageNo + 1, pageInfo.getParameterUrl()) + "\" " + createFunction(pageNo + 1,pageInfo) + " aria-label=\"Next\"><span aria-hidden=\"true\">»</span></a></li>");
         return html.toString();
     }
 
@@ -81,7 +81,7 @@ public class PageTag extends SimpleTagSupport {
             return "";
         } else {
             StringBuilder html = new StringBuilder();
-            String url =pageInfo.getUrl();
+            String url =pageInfo.getParameterUrl();
             html.append("onclick =openPage('");
             if (url.contains("pageNo")) {
                 int index = url.indexOf("pageNo");

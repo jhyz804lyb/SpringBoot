@@ -26,6 +26,7 @@ public class ParamInterceptor implements HandlerInterceptor
         HandlerMethod method = (HandlerMethod) o;
         Object result = ConfigUtils.invokeMethod(method, httpServletRequest);
         httpServletRequest.setAttribute(Cost.FRAME_PARAM, result);
+        httpServletRequest.setAttribute(Cost.REQUEST_URL,httpServletRequest.getRequestURI());
         return true;
     }
 

@@ -58,7 +58,7 @@ public class HqlConstructor
             else
             {
                 HQL.append(key).append(ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class) ?
-                        ":" + findKey.selectType() : "=:").append(key);
+                        findKey.selectType()+":" : "=:").append(key);
             }
             first = false;
         }
@@ -114,7 +114,7 @@ public class HqlConstructor
             else
             {
                 HQL.append(key).append(ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class) ?
-                        ":" + findKey.selectType() : "=:").append(key);
+                          findKey.selectType()+":" : "=:").append(key);
             }
             first = false;
         }
@@ -161,7 +161,7 @@ public class HqlConstructor
             else
             {
                 HQL.append(key).append(ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class) ?
-                        ":" + findKey.selectType() : "=:").append(key);
+                        findKey.selectType()+":" : "=:").append(key);
             }
             first = false;
         }
@@ -208,7 +208,7 @@ public class HqlConstructor
             else
             {
                 HQL.append(key).append(ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class) ?
-                        ":" + findKey.selectType() : "=:").append(key);
+                        findKey.selectType()+":" : "=:").append(key);
             }
             first = false;
         }
@@ -252,7 +252,7 @@ public class HqlConstructor
             else
             {
                 HQL.append(key).append(ReflectionUtil.hasFieldAnnotation(actualField, FindKey.class) ?
-                        ":" + findKey.selectType() : "=:").append(key);
+                        findKey.selectType()+":" : "=:").append(key);
             }
             first = false;
         }

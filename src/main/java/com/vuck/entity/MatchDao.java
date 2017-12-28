@@ -1,22 +1,28 @@
 package com.vuck.entity;
 
-import com.vuck.annotations.ListField;
+import com.vuck.annotations.*;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 public class MatchDao {
+    @FindKey(labelName ="比赛名称")
     @ListField(showName = "比赛名称",orderId = 1)
     private String matchName;
+
     @ListField(showName = "比赛时间",orderId = 6)
     private Date matchTime;
+
     @ListField(showName = "比赛状态",orderId = 5)
     private String state;
+    @FindKey(labelName ="主队名称")
     @ListField(showName = "主队名称",orderId = 2)
     private String homeTeam;
+
     @ListField(showName = "比赛结果",orderId = 4)
     private String result;
-    @ListField(showName = "客队每次",orderId = 3)
+
+    @FindKey(labelName ="客队名称")
+    @ListField(showName = "客队名称",orderId = 3)
     private String guestTeam;
 
     public String getMatchName() {

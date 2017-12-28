@@ -78,7 +78,7 @@ public class HqlBaseDaoImlp<T> implements HqlBaseDao<T>
             pageInfo.setMaxCount(count);
             pageInfo.setMaxPage(count % pageInfo.getPageCount() == 0 ? count / pageInfo.getPageCount() :
                     pageInfo.getPageCount() + 1);
-            query.setFirstResult(pageInfo.getPageNo() * pageInfo.getPageCount());
+            query.setFirstResult((pageInfo.getPageNo()-1) * pageInfo.getPageCount());
             query.setMaxResults((pageInfo.getPageNo() + 1) * pageInfo.getPageCount());
             return query.list();
         }
@@ -97,7 +97,7 @@ public class HqlBaseDaoImlp<T> implements HqlBaseDao<T>
         Map<String, String> requestParam = HqlConstructor.getRequestParam(request.getParameterMap(), beanType);
         if (pageInfo != null)
         {
-            pageInfo.setParameterUrl(Util.getRequestUrl(request));
+            pageInfo.setParameterUrl(Util.getRequestUrlParam(request));
             pageInfo.setUrl(request.getRequestURI());
         }
         return query(beanType, requestParam, pageInfo, isFindKey);
@@ -110,7 +110,7 @@ public class HqlBaseDaoImlp<T> implements HqlBaseDao<T>
         Map<String, String> requestParam = HqlConstructor.getRequestParam(request.getParameterMap(), beanType);
         if (pageInfo != null)
         {
-            pageInfo.setParameterUrl(Util.getRequestUrl(request));
+            pageInfo.setParameterUrl(Util.getRequestUrlParam(request));
             pageInfo.setUrl(request.getRequestURI());
         }
         return query(entityName, beanType,requestParam,pageInfo,isFindKey);
@@ -135,8 +135,8 @@ public class HqlBaseDaoImlp<T> implements HqlBaseDao<T>
             Integer count = getCount(countHQL, params, beanType, isFindKey);
             pageInfo.setMaxCount(count);
             pageInfo.setMaxPage(count % pageInfo.getPageCount() == 0 ? count / pageInfo.getPageCount() :
-                    pageInfo.getPageCount() + 1);
-            query.setFirstResult(pageInfo.getPageNo() * pageInfo.getPageCount());
+                count/pageInfo.getPageCount() + 1);
+            query.setFirstResult((pageInfo.getPageNo()-1) * pageInfo.getPageCount());
             query.setMaxResults(pageInfo.getPageCount());
             return query.list();
         }
@@ -147,7 +147,7 @@ public class HqlBaseDaoImlp<T> implements HqlBaseDao<T>
         Map<String, String> requestParam = HqlConstructor.getRequestParam(request.getParameterMap(), beanType);
         if (pageInfo != null)
         {
-            pageInfo.setParameterUrl(Util.getRequestUrl(request));
+            pageInfo.setParameterUrl(Util.getRequestUrlParam(request));
             pageInfo.setUrl(request.getRequestURI());
         }
         return queryByHQL(hql,beanType,requestParam,pageInfo,isFindKey);
@@ -168,8 +168,8 @@ public class HqlBaseDaoImlp<T> implements HqlBaseDao<T>
             Integer count = getCount(countHQL, params, beanType, isFindKey);
             pageInfo.setMaxCount(count);
             pageInfo.setMaxPage(count % pageInfo.getPageCount() == 0 ? count / pageInfo.getPageCount() :
-                    pageInfo.getPageCount() + 1);
-            query.setFirstResult(pageInfo.getPageNo() * pageInfo.getPageCount());
+                count/pageInfo.getPageCount() + 1);
+            query.setFirstResult((pageInfo.getPageNo()-1) * pageInfo.getPageCount());
             query.setMaxResults(pageInfo.getPageCount());
             return query.list();
         }
