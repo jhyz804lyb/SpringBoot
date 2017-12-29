@@ -44,4 +44,10 @@ public @interface Find
      * @return
      */
     String invokeMethod() default "";
+
+    /**
+     * 使用Mybatis 查询时作为条件的字段，在请求参数中的paramName
+     * @return
+     */
+    String[] searchKey() default {};
 }
