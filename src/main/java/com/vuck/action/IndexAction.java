@@ -1,14 +1,17 @@
 package com.vuck.action;
 
+import com.google.zxing.WriterException;
 import com.vuck.annotations.*;
 import com.vuck.common.Cost;
 import com.vuck.entity.*;
 import com.vuck.m_dao.MBDao;
+import com.vuck.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -50,5 +53,18 @@ public class IndexAction
     public List<Match> exportFile2(@Find(invokeClass=MBDao.class,invokeMethod = "getMatchList",searchKey = {"matchName"})List<Match> matchs )
     {
         return matchs;
+    }
+
+    /**
+     * 生成图片
+     * @return
+     * @throws IOException
+     * @throws WriterException
+     */
+    @RequestMapping("/image")
+    @ImageInfo
+    public byte[] createImage() throws IOException, WriterException
+    {
+        return ImageUtils.CreateImgCode(300,"二维码测试0.0.0.00.0");
     }
 }
