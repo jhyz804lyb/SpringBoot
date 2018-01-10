@@ -12,6 +12,8 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface AutowiredSimple
 {
+    Class<?> beanType();
+
     String[] searchFields();
 
     String[] showFields();

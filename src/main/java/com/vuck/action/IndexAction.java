@@ -14,9 +14,6 @@ import java.util.List;
 @Controller
 public class IndexAction
 {
-    @Autowired
-    MBDao dao;
-
     @RequestMapping("/index")
     public String index(HttpServletRequest request){
         request.setAttribute("name","张三");
