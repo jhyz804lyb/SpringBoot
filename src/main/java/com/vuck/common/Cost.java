@@ -1,6 +1,7 @@
 package com.vuck.common;
 
-public class Cost {
+public class Cost
+{
     public static boolean IS_INJECT = false;
     public static String lastInitTime = null;
     public static String FORWARD_NAME = "ISFORWARDED";
@@ -22,5 +23,19 @@ public class Cost {
     public static final String REQUEST_URL = "REQUEST_URL";
 
     public static final String COMMON_PAGE = "base/base";
+
+    /**
+     * 生成页面时候这么产生类型是通过注解还是通过代理方法(通过注解还)
+     */
+    public static final String ANNOTATION_TYPE = "CREATE_BY_ANNOTATION";
+    /**
+     * 通过代理方法
+     */
+    public static final String INVOKE_TYPE = "CREATE_BY_ANNOTATION";
+
+    /**
+     * 默认请求方式
+     */
+    public static final String DEFAULT_REQUEST_TYPE = "POST";
 
 }

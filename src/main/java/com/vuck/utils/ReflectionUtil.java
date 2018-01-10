@@ -1,7 +1,5 @@
 package com.vuck.utils;
-import com.vuck.annotations.FindKey;
 
-import javax.persistence.Entity;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.Map;
@@ -16,7 +14,7 @@ public class ReflectionUtil
      *
      */
     public static Object getValue(Object instance, String fieldName)
-            throws IllegalAccessException, NoSuchFieldException
+        throws IllegalAccessException, NoSuchFieldException
     {
 
         Field field = instance.getClass().getDeclaredField(fieldName);
@@ -29,7 +27,7 @@ public class ReflectionUtil
      *
      */
     public static Object getValue(Object instance, Field field)
-            throws IllegalAccessException
+        throws IllegalAccessException
     {
 
         field.setAccessible(true); // 参数值为true，禁止访问控制检查
@@ -42,7 +40,7 @@ public class ReflectionUtil
      *
      */
     public static Object getValue(Object instance, Class tigerClass, String fieldName)
-            throws IllegalAccessException, NoSuchFieldException
+        throws IllegalAccessException, NoSuchFieldException
     {
 
         Field field = tigerClass.getDeclaredField(fieldName);
@@ -56,7 +54,7 @@ public class ReflectionUtil
      *
      */
     public static void setValue(Object instance, String fileName, Object value)
-            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+        throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
     {
 
         Field field = instance.getClass().getDeclaredField(fileName);
@@ -69,13 +67,30 @@ public class ReflectionUtil
      *
      */
     public static Object callMethod(Object instance, String methodName, Class[] classes, Object[] objects)
-            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException
+        throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+        InvocationTargetException
     {
 
         Method method = instance.getClass().getDeclaredMethod(methodName, classes);
         method.setAccessible(true);
         return method.invoke(instance, objects);
+    }
+
+    /***
+     * 访问私有方法
+     *
+     */
+    public static Method getMethod(Class type, String methodName)
+        throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+        InvocationTargetException
+    {
+        Method[] methods = type.getMethods();
+        for (Method method : methods)
+        {
+            if (methodName.equals(method.getName())) return method;
+
+        }
+        return null;
     }
 
     public static Field getField(Class tigerClass, String fieldName) throws NoSuchFieldException
@@ -404,7 +419,7 @@ public class ReflectionUtil
      * @throws IllegalAccessException
      */
     public static Object getActualVal(Object bean, String filedName, Class className)
-            throws IllegalAccessException
+        throws IllegalAccessException
     {
         if (filedName.indexOf(".") != -1)
         {
@@ -452,7 +467,7 @@ public class ReflectionUtil
      * @throws IllegalAccessException
      */
     public static Object getFiledVal(Object commerceInfo, String filedName, Class className)
-            throws IllegalAccessException
+        throws IllegalAccessException
     {
         if (filedName.indexOf(".") != -1)
         {
@@ -500,7 +515,7 @@ public class ReflectionUtil
                     }
 
                     if ((field.getType().getName().equals("java.lang.Double")) ||
-                            (field.getType().getSimpleName().equals("double")))
+                        (field.getType().getSimpleName().equals("double")))
                     {
                         field.setAccessible(true);
                         Object obj = field.get(commerceInfo);
@@ -514,7 +529,7 @@ public class ReflectionUtil
                         return NumberUtils.keepPrecision("" + obj, 2);
                     }
                     if ((field.getType().getName().equals("java.lang.Integer")) ||
-                            (field.getType().getSimpleName().equals("int")))
+                        (field.getType().getSimpleName().equals("int")))
                     {
                         field.setAccessible(true);
                         Object obj = field.get(commerceInfo);
@@ -628,6 +643,7 @@ public class ReflectionUtil
 
     /**
      * 判断字段上是否拥有注解
+     *
      * @param field
      * @param annotation
      * @param <T>
@@ -645,6 +661,7 @@ public class ReflectionUtil
 
     /**
      * 判断类上面是否拥有某个注解
+     *
      * @param type
      * @param annotation
      * @param <T>
@@ -664,11 +681,13 @@ public class ReflectionUtil
      * @param type
      * @return
      */
-    public static Field[] getFieldArray(Class type, Class an) {
+    public static Field[] getFieldArray(Class type, Class an)
+    {
         int count = 0;
         Field[] temp = new Field[getAnnotationCount(type, an)];
         Field[] parment = getParment(type);
-        for (Field field : parment) {
+        for (Field field : parment)
+        {
             Annotation annotation = getFieldAnnotation(field, an);
             if (annotation != null) temp[count++] = field;
         }
@@ -679,10 +698,12 @@ public class ReflectionUtil
      * @param type
      * @return
      */
-    public static int getAnnotationCount(Class type, Class an) {
+    public static int getAnnotationCount(Class type, Class an)
+    {
         int count = 0;
         Field[] parment = getParment(type);
-        for (Field field : parment) {
+        for (Field field : parment)
+        {
             Annotation annotation = getFieldAnnotation(field, an);
             if (annotation != null) count++;
         }

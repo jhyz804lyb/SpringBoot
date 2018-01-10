@@ -5,16 +5,19 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Verify {
+public @interface Verify
+{
     /**
      * 类名
+     *
      * @return
      */
-    String classPath() ;
+    String classPath();
 
     /**
      * 方法名
+     *
      * @return
      */
-    String MethodName() ;
+    String MethodName();
 }
